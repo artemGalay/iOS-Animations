@@ -47,7 +47,31 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         view.addBackground()
         setupHierarchy()
-        setupLayout()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        titleLabel.center.x -= view.bounds.width
+        userNameTextField.center.x -= view.bounds.width
+        passwordTextField.center.x -= view.bounds.width
+        logInButton.center.x += view.bounds.width
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIView.animate(withDuration: 0.5) {
+            self.titleLabel.center.x += self.view.bounds.width
+        }
+        UIView.animate(withDuration: 0.5, delay: 0.1) {
+            self.userNameTextField.center.x += self.view.bounds.width
+        }
+        UIView.animate(withDuration: 0.5, delay: 0.3) {
+            self.passwordTextField.center.x += self.view.bounds.width
+        }
+        UIView.animate(withDuration: 0.5, delay: 0.4) {
+            self.logInButton.center.x -= self.view.bounds.width
+        }
+        self.setupLayout()
     }
 
     private func setupHierarchy() {
