@@ -19,7 +19,7 @@ final class MainViewController: UIViewController {
     private let userNameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Username"
-        textField.backgroundColor = .systemGray
+        textField.backgroundColor = .systemGray5
         textField.borderStyle = .roundedRect
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -28,7 +28,7 @@ final class MainViewController: UIViewController {
     private let passwordTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Password"
-        textField.backgroundColor = .systemGray
+        textField.backgroundColor = .systemGray5
         textField.borderStyle = .roundedRect
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -41,6 +41,13 @@ final class MainViewController: UIViewController {
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }()
+
+    private let cloudImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "cloud")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }()
 
     override func viewDidLoad() {
@@ -62,7 +69,7 @@ final class MainViewController: UIViewController {
         UIView.animate(withDuration: 0.5) {
             self.titleLabel.center.x += self.view.bounds.width
         }
-        UIView.animate(withDuration: 0.5, delay: 0.1) {
+        UIView.animate(withDuration: 0.5, delay: 0.1, options: [.repeat, .autoreverse, .curveEaseInOut]) {
             self.userNameTextField.center.x += self.view.bounds.width
         }
         UIView.animate(withDuration: 0.5, delay: 0.3) {
@@ -79,6 +86,7 @@ final class MainViewController: UIViewController {
         view.addSubview(userNameTextField)
         view.addSubview(passwordTextField)
         view.addSubview(logInButton)
+        view.addSubview(cloudImage)
     }
 
     private func setupLayout() {
@@ -99,7 +107,12 @@ final class MainViewController: UIViewController {
             logInButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
             logInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logInButton.widthAnchor.constraint(equalToConstant: 100),
-            logInButton.heightAnchor.constraint(equalToConstant: 50)
+            logInButton.heightAnchor.constraint(equalToConstant: 50),
+
+            cloudImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            cloudImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            cloudImage.widthAnchor.constraint(equalToConstant: 200),
+            cloudImage.heightAnchor.constraint(equalToConstant: 170)
         ])
     }
 }
