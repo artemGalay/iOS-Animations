@@ -65,6 +65,14 @@ final class MainViewController: UIViewController {
         return imageView
     }()
 
+    private let activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView(style: .medium)
+        activity.startAnimating()
+        activity.alpha = 0.0
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        return activity
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addBackground()
@@ -113,8 +121,9 @@ final class MainViewController: UIViewController {
                        initialSpringVelocity: 0.0,
                        options: [], animations: {
             self.logInButton.center.y -= 30.0
-            //          self.logInButton.bounds.size.width += 50.0
+                      self.logInButton.bounds.size.width += 150.0
             self.logInButton.alpha = 1.0
+            self.activityIndicator.alpha = 1.0
         }, completion: nil)
         self.setupLayout()
     }
@@ -127,6 +136,7 @@ final class MainViewController: UIViewController {
         view.addSubview(cloudImage)
         view.addSubview(cloudImage2)
         view.addSubview(cloudImage3)
+        view.addSubview(activityIndicator)
     }
 
     private func setupLayout() {
@@ -162,7 +172,10 @@ final class MainViewController: UIViewController {
             cloudImage3.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 80),
             cloudImage3.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             cloudImage3.widthAnchor.constraint(equalToConstant: 200),
-            cloudImage3.heightAnchor.constraint(equalToConstant: 170)
+            cloudImage3.heightAnchor.constraint(equalToConstant: 170),
+
+            activityIndicator.centerYAnchor.constraint(equalTo: logInButton.centerYAnchor),
+            activityIndicator.leadingAnchor.constraint(equalTo: logInButton.leadingAnchor)
         ])
     }
 
