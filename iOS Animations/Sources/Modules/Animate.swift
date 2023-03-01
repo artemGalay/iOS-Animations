@@ -77,15 +77,27 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         view.addBackground()
         setupHierarchy()
+        setupLayout()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        titleLabel.center.x -= view.bounds.width
-        userNameTextField.center.x -= view.bounds.width
-        passwordTextField.center.x -= view.bounds.width
 
-//        logInButton.center.y += 30.0
+        let flyRight = CABasicAnimation(keyPath: "position.x")
+        flyRight.fillMode = CAMediaTimingFillMode.both // для отображения до и после анимации
+//        flyRight.isRemovedOnCompletion = false
+        flyRight.fromValue = -view.bounds.size.width / 2 // начало анимации
+        flyRight.toValue = view.bounds.size.width / 2 // конец анимации
+        flyRight.duration = 0.5
+        titleLabel.layer.add(flyRight, forKey: nil) // добавление анимации
+
+        flyRight.beginTime = CACurrentMediaTime() + 0.2
+        userNameTextField.layer.add(flyRight, forKey: nil)
+
+        flyRight.beginTime = CACurrentMediaTime() + 0.4
+        passwordTextField.layer.add(flyRight, forKey: nil)
+
+        logInButton.center.y -= 30.0
         logInButton.alpha = 0.0
 
         cloudImage.alpha = 0
@@ -95,15 +107,6 @@ final class MainViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIView.animate(withDuration: 0.5) {
-            self.titleLabel.center.x += self.view.bounds.width
-        }
-        UIView.animate(withDuration: 0.5, delay: 0.1, options: []) {
-            self.userNameTextField.center.x += self.view.bounds.width
-        }
-        UIView.animate(withDuration: 0.5, delay: 0.3) {
-            self.passwordTextField.center.x += self.view.bounds.width
-        }
 
         UIView.animate(withDuration: 0.5, delay: 0.5) {
             self.cloudImage.alpha = 1
@@ -115,17 +118,16 @@ final class MainViewController: UIViewController {
             self.cloudImage3.alpha = 1
         }
 
-        UIView.animate(withDuration: 0.5, // продолжительнось анимации
-                       delay: 0.5,
-                       usingSpringWithDamping: 0.5, // эффект пружины
-                       initialSpringVelocity: 0.0,
+        UIView.animate(withDuration: 3, // продолжительнось анимации
+                       delay: 0.1,
+                       usingSpringWithDamping: 0.2, // эффект пружины
+                       initialSpringVelocity: 4.0, // скорость пружины
                        options: [], animations: {
-            self.logInButton.center.y -= 30.0
-                      self.logInButton.bounds.size.width += 150.0
             self.logInButton.alpha = 1.0
+            self.logInButton.center.y += 50.0
             self.activityIndicator.alpha = 1.0
         }, completion: nil)
-        self.setupLayout()
+
     }
 
     private func setupHierarchy() {
@@ -181,8 +183,8 @@ final class MainViewController: UIViewController {
 
     @objc private func buttonTapped() {
         UIView.animate(withDuration: 0.33, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [], animations: {
-//            self.logInButton.center.y += 60.0 // кнопка перемещается вниз
-//            self.logInButton.bounds.size.width += 60.0 // кнопка увеличивается в размере в ширину
+//                        self.logInButton.center.y += 30.0 // кнопка перемещается вниз
+                        self.logInButton.bounds.size.width -= 100.0 // кнопка увеличивается в размере в ширину
             self.logInButton.backgroundColor = UIColor(red: 0.85, green: 0.83, blue: 0.45, alpha: 1.0)
 
 
